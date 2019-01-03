@@ -1,0 +1,46 @@
+﻿body {
+    background-image: url(https://images2.alphacoders.com/589/589399.jpg);
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
+
+.login_bg {
+    background: #ffffff36;
+    min-height: 250px;
+    margin-top: 15%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px 0px #00000029;
+}
+
+    .login_bg h2 {
+        margin: 0px;
+        color: #fff;
+        text-align: center;
+        height: 40px;
+        line-height: 62px;
+    }
+
+    .login_bg .form-group {
+        margin-top: 25px;
+    }
+
+    .login_bg .form-control {
+        background: none;
+        padding: 20px 12px;
+        border: 1px solid #cad4da;
+        color: #fff;
+    }
+
+    .login_bg .login_btn {
+        border: 0px;
+        padding: 8px;
+        color: #fff;
+        background: #303c67;
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+
+.form-control::placeholder {
+    color: #fff;
+}
