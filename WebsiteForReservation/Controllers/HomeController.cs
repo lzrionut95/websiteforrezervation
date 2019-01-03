@@ -40,9 +40,9 @@ namespace WebsiteForReservation.Controllers
                 User1 user=db.User1.Single(usr => usr.UserId == usrId);
                 if (oldPassword != user.Password && oldPassword!= newPassword && newPassword == confirmNewPassword)
                 {
+                        user.Email = user.Email.Replace(" ", "");
                         user.Password = newPassword;
-                        db.SaveChanges();
-                    
+                        db.SaveChanges();                  
                 }
             }
             else
