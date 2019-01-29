@@ -26,12 +26,12 @@ namespace WebsiteForReservation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "UserId,Email,Password,FirstName,LastName")] User1 user1,string confirmPassword,string confirmEmail)
+        public ActionResult Register([Bind(Include = "UserId,Email,Password,FirstName,LastName")] User user,string confirmPassword,string confirmEmail)
         {
-            if (ModelState.IsValid && confirmPassword==user1.Password)
+            if (ModelState.IsValid && confirmPassword==user.Password)
             {
-                if (confirmEmail == user1.Email) { 
-                db.User1.Add(user1);
+                if (confirmEmail == user.Email) { 
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Login");
                 }
@@ -44,23 +44,48 @@ namespace WebsiteForReservation.Controllers
             {
 
             }
-            ViewBag.Message = user1.FirstName + " " + user1.LastName + " successfully registered";
-            return View(user1);
+            ViewBag.Message = user.FirstName + " " + user.LastName + " successfully registered";
+            return View(user);
         }
         [HttpPost]
-        public ActionResult Login(User1 user)
+        public ActionResult Login(User user)
         {
-            var usr = db.User1.Single(u => u.Email == user.Email && u.Password == user.Password);
+            try
+            {
+                var admin = db.Admins.Single(u => u.Email == user.Email && u.Password == user.Password);
+                if (admin != null)
+                {
+                    Session["AdminId"] = admin.AdminId.ToString();
+                    return RedirectToAction("Index", "Admin", new { area = "Admin" });
+
+                }
+            }
+            catch ( Exception e)
+            {
+
+            }
+            try
+            {
+
+                var usr = db.Users.Single(u => u.Email == user.Email && u.Password == user.Password);
+            
             if (usr != null)
             {
                 Session["UserId"] = usr.UserId.ToString();
                 Session["Email"] = usr.Email.ToString();
-                return RedirectToAction("Index", "Home", new { area = "Home" });
+                return RedirectToAction("Home", "Home", new { area = "Home" });
                 
             }
             else
             {
-                ModelState.AddModelError("", "Email or password is wrong!");
+                    // ModelState.AddModelError("", "Email or password is wrong!");
+                    //return RedirectToAction("Login", "Login", new { area = "Login" });
+                    return Content("<script>alert('Welcome To All');</script>");
+                }
+            }
+            catch (Exception e)
+            {
+
             }
             return View();
         }

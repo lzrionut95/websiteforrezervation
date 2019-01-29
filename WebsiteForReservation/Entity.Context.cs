@@ -25,7 +25,8 @@ namespace WebsiteForReservation
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Reservation1> Reservation1 { get; set; }
-        public virtual DbSet<User1> User1 { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Admin> Admins { get; set; }
     }
 }

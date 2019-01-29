@@ -1,42 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Reservation1" EntityType="DBModel.Reservation1" />
-    <EntitySet Name="User1" EntityType="DBModel.User1" />
-    <AssociationSet Name="FK_Users_Reservation" Association="DBModel.FK_Users_Reservation">
-      <End Role="Reservation1" EntitySet="Reservation1" />
-      <End Role="User1" EntitySet="User1" />
+    <EntitySet Name="Reservations" EntityType="DBModel.Reservation" />
+    <EntitySet Name="Users" EntityType="DBModel.User" />
+    <AssociationSet Name="FK_Reservation_Users" Association="DBModel.FK_Reservation_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Reservation" EntitySet="Reservations" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="Reservation1">
+  <EntityType Name="Reservation">
     <Key>
       <PropertyRef Name="ReservationId" />
     </Key>
-    <Property Name="ReservationId" Type="Int32" Nullable="false" />
+    <Property Name="ReservationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Users" Relationship="DBModel.FK_Users_Reservation" FromRole="Reservation1" ToRole="User1" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="DBModel.FK_Reservation_Users" FromRole="Reservation" ToRole="User" />
   </EntityType>
-  <EntityType Name="User1">
+  <EntityType Name="User">
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
     <Property Name="Password" Type="String" Nullable="false" MaxLength="16" FixedLength="true" Unicode="true" />
     <Property Name="FirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
     <Property Name="LastName" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
-    <Property Name="ReservationId" Type="Int32" />
-    <NavigationProperty Name="Reservation" Relationship="DBModel.FK_Users_Reservation" FromRole="User1" ToRole="Reservation1" />
+    <NavigationProperty Name="Reservations" Relationship="DBModel.FK_Reservation_Users" FromRole="User" ToRole="Reservation" />
   </EntityType>
-  <Association Name="FK_Users_Reservation">
-    <End Type="DBModel.Reservation1" Role="Reservation1" Multiplicity="0..1" />
-    <End Type="DBModel.User1" Role="User1" Multiplicity="*" />
+  <Association Name="FK_Reservation_Users">
+    <End Type="DBModel.User" Role="User" Multiplicity="1" />
+    <End Type="DBModel.Reservation" Role="Reservation" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Reservation1">
-        <PropertyRef Name="ReservationId" />
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
       </Principal>
-      <Dependent Role="User1">
-        <PropertyRef Name="ReservationId" />
+      <Dependent Role="Reservation">
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -1,4 +1,4 @@
-﻿@model WebsiteForReservation.User1
+﻿@model WebsiteForReservation.User
 
 @{
     ViewBag.Title = "Register";
@@ -17,43 +17,31 @@
                 <hr />
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail" } })
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
                 </div>
 
                 <div class="form-group">
-                    <label>Confirm Email</label>
-
-                    <input class="form-control" type="text" name="confirmEmail" id="confirmEmail" runat="server" />
+                    <input class="form-control" type="text" name="confirmEmail" id="confirmEmail" placeholder="Confirm E-mail"  runat="server" />
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password", @type = "password" } })
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    <label>Confirm password</label>
-
-                    <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" runat="server" />
+                    <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" runat="server" />
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First name" } })
                     @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last name" } })
                     @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
 
                 </div>

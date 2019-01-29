@@ -1,18 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="DBEntities">
-    <EntitySetMapping Name="Reservation1">
-      <EntityTypeMapping TypeName="DBModel.Reservation1">
+    <EntitySetMapping Name="Reservations">
+      <EntityTypeMapping TypeName="DBModel.Reservation">
         <MappingFragment StoreEntitySet="Reservation">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="ReservationId" ColumnName="ReservationId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="User1">
-      <EntityTypeMapping TypeName="DBModel.User1">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="DBModel.User">
         <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="ReservationId" ColumnName="ReservationId" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="Password" ColumnName="Password" />

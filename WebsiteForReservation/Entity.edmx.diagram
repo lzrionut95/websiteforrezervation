@@ -5,9 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f15ba3f33cae46549044dc6f55f89793" Name="Diagram1">
-        <EntityTypeShape EntityType="DBModel.Reservation1" Width="1.5" PointX="2.375" PointY="2" />
-        <EntityTypeShape EntityType="DBModel.User1" Width="1.5" PointX="8.625" PointY="1.875" />
-        <AssociationConnector Association="DBModel.FK_Users_Reservation" />
+        <EntityTypeShape EntityType="DBModel.Reservation" Width="1.5" PointX="7.5" PointY="1.625" />
+        <EntityTypeShape EntityType="DBModel.User" Width="1.5" PointX="2.75" PointY="1.5" />
+        <AssociationConnector Association="DBModel.FK_Reservation_Users" />
+        <EntityTypeShape EntityType="DBModel.Admin" Width="1.5" PointX="5.25" PointY="4" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
