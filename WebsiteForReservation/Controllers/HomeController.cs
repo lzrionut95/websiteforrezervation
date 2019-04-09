@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using WebsiteForReservation;
+using WebsiteForReservation.Classes;
 
 namespace WebsiteForReservation.Controllers
 {
@@ -53,12 +54,14 @@ namespace WebsiteForReservation.Controllers
             {
                 return RedirectToAction("Login", "Login", new { area = "Login" });
             }
+            Tools tool = new Tools();           
             int usrId = Convert.ToInt32(Session["UserId"].ToString());
             User user = db.Users.Single(usr => usr.UserId == usrId);
-            if (oldPassword != user.Password && oldPassword != newPassword && newPassword == confirmNewPassword)
+            oldPassword = tool.Encrypt(oldPassword);
+            if (oldPassword == user.Password && oldPassword != newPassword && newPassword == confirmNewPassword)
             {
                 user.Email = user.Email.Replace(" ", "");
-                user.Password = newPassword;
+                user.Password = tool.Encrypt(newPassword);
                 db.SaveChanges();
                 return RedirectToAction("Home", "Home", new { area = "Home" });
             }

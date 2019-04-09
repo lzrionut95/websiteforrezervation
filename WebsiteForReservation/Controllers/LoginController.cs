@@ -7,17 +7,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebsiteForReservation;
+using WebsiteForReservation.Classes;
 
 namespace WebsiteForReservation.Controllers
 {
     public class LoginController : Controller
     {
         private DBEntities db = new DBEntities();
+        private Tools tool = new Tools();
 
-        // GET: Login
         public ActionResult Login()
         {
             return View();
+            
         }
         public ActionResult Register()
         {
@@ -30,6 +32,8 @@ namespace WebsiteForReservation.Controllers
         {
             if (ModelState.IsValid && confirmPassword==user.Password)
             {
+                
+                user.Password = tool.Encrypt(user.Password);
                 if (confirmEmail == user.Email) { 
                 db.Users.Add(user);
                 db.SaveChanges();
@@ -50,9 +54,12 @@ namespace WebsiteForReservation.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
+            string password = tool.Encrypt(user.Password);
             try
             {
-                var admin = db.Admins.Single(u => u.Email == user.Email && u.Password == user.Password);
+                
+                
+                var admin = db.Admins.SingleOrDefault(u => u.Email == user.Email && u.Password == password);
                 if (admin != null)
                 {
                     Session["AdminId"] = admin.AdminId.ToString();
@@ -62,13 +69,11 @@ namespace WebsiteForReservation.Controllers
             }
             catch ( Exception e)
             {
-
+                Console.WriteLine(e);
             }
             try
-            {
-
-                var usr = db.Users.Single(u => u.Email == user.Email && u.Password == user.Password);
-            
+            {               
+                var usr = db.Users.SingleOrDefault(u => u.Email == user.Email && u.Password == password);                         
             if (usr != null)
             {
                 Session["UserId"] = usr.UserId.ToString();
@@ -78,14 +83,12 @@ namespace WebsiteForReservation.Controllers
             }
             else
             {
-                    // ModelState.AddModelError("", "Email or password is wrong!");
-                    //return RedirectToAction("Login", "Login", new { area = "Login" });
-                    return Content("<script>alert('Welcome To All');</script>");
+                    return Content("<script>alert('Login Failed');</script>");
                 }
             }
             catch (Exception e)
             {
-
+                Console.WriteLine(e);
             }
             return View();
         }
