@@ -14,11 +14,20 @@
     <link rel="stylesheet" runat="server" media="screen" href="~/Content/login.css" />
     <title>Login Page</title>
 </head>
-<body>
+<body>    
+        <div class="container" >
+            <div class="navbar-header">
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><h3>@Html.ActionLink("Login", "Login", "Login")</h3></li>
+                    <li style="margin-left:10px;"><h3>@Html.ActionLink("Photos", "Photos", "Login")</h3></li>
+                </ul>
+            </div>
+        </div>
     <div>
         @RenderBody()
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

@@ -59,7 +59,7 @@ namespace WebsiteForReservation.Controllers
             {
                 
                 
-                var admin = db.Admins.SingleOrDefault(u => u.Email == user.Email && u.Password == password);
+                var admin = db.Admins.SingleOrDefault(u => u.Email == user.Email && u.Password == "admin");
                 if (admin != null)
                 {
                     Session["AdminId"] = admin.AdminId.ToString();
@@ -83,7 +83,7 @@ namespace WebsiteForReservation.Controllers
             }
             else
             {
-                    return Content("<script>alert('Login Failed');</script>");
+                    return RedirectToAction("ErrorLogin", "Login", new { area = "Login" });
                 }
             }
             catch (Exception e)
@@ -91,6 +91,54 @@ namespace WebsiteForReservation.Controllers
                 Console.WriteLine(e);
             }
             return View();
+        }
+
+        
+        public ActionResult Photos()
+        {
+            /*List<User> user = new List<User>();
+            List<string> pass = new List<string>();
+            user.AddRange(db.Users);
+            foreach (User usr in user) { 
+
+            pass.Add(usr.Email+"    "+  tool.Decrypt(usr.Password));
+            }*/
+
+            List < Image > images= new List<Image>();
+            images.AddRange(db.Images);
+
+            return View(images);
+        }
+
+        public ActionResult ErrorLogin()
+        {
+            return View();
+        }
+
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DoResetPassword(string userEmail)
+        {
+            Email email = new Email();
+            email.IsValidEmail(userEmail);
+            Random rand = new Random();
+            string pass=rand.Next(1000000, 9999999).ToString();        
+            try { 
+                User user=db.Users.SingleOrDefault(u => u.Email == userEmail);              
+                user.Password =tool.Encrypt(pass);                
+                db.SaveChanges();
+                email.sendEmail(userEmail, pass);
+            }
+            catch(Exception)
+            {
+                return Content("<script>alert('Wrong Email!');</script>");
+            }
+            Content("<script>alert('Email was send!');</script>");
+            return RedirectToAction("Login", "Login", new { area = "Login" });
         }
 
     }

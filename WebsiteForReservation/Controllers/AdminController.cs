@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -44,11 +45,16 @@ namespace WebsiteForReservation.Controllers
             List<User> user = new List<User>();
             user = db.Users.SqlQuery(
                   "SELECT * FROM MainDB.dbo.Users").ToList();
-            ViewData["MyData"] = user;
+            
 
             return View(user);
         }
-        public ActionResult CreateUser()
+        public ActionResult AddReservation(int? id)
+        {
+
+            return View(id);
+        }
+            public ActionResult CreateUser()
         {
             if (!existSession())
             {
@@ -148,6 +154,33 @@ namespace WebsiteForReservation.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult AddPhotos()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddPhotos(HttpPostedFileBase uploadFile)
+        {
+            if (uploadFile != null)
+            {
+                Image img = new Image();
+                var fileName = Path.GetFileName(uploadFile.FileName);                
+                img.ImagesPath = "~/Photos/" + fileName;
+                db.Images.Add(img);
+                db.SaveChanges();
+
+                uploadFile.SaveAs(Server.MapPath(img.ImagesPath));
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Reservation()
+        {
+            return View();
+        }
+
 
 
     }

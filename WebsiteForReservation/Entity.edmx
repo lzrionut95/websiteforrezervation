@@ -11,8 +11,15 @@
           </Key>
           <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nchar" MaxLength="16" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="ImagesID" />
+          </Key>
+          <Property Name="ImagesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImagesPath" Type="nchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Reservation">
           <Key>
@@ -29,7 +36,7 @@
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nchar" MaxLength="16" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="30" Nullable="false" />
           <Property Name="FirstName" Type="nchar" MaxLength="20" Nullable="false" />
           <Property Name="LastName" Type="nchar" MaxLength="20" Nullable="false" />
         </EntityType>
@@ -59,6 +66,7 @@
         </Association>
         <EntityContainer Name="DBModelStoreContainer">
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Reservation_Users" Association="Self.FK_Reservation_Users">
@@ -82,6 +90,11 @@
             <End Role="Reservation" EntitySet="Reservations" />
           </AssociationSet>
           <EntitySet Name="Admins" EntityType="DBModel.Admin" />
+          <EntitySet Name="Images" EntityType="DBModel.Image" />
+          <AssociationSet Name="FK_Users_Users" Association="DBModel.FK_Users_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User1" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Reservation">
           <Key>
@@ -99,10 +112,12 @@
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="16" FixedLength="true" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Reservations" Relationship="DBModel.FK_Reservation_Users" FromRole="User" ToRole="Reservation" />
+          <NavigationProperty Name="Users1" Relationship="DBModel.FK_Users_Users" FromRole="User" ToRole="User1" />
+          <NavigationProperty Name="User1" Relationship="DBModel.FK_Users_Users" FromRole="User1" ToRole="User" />
           </EntityType>
         <Association Name="FK_Reservation_Users">
           <End Type="DBModel.User" Role="User" Multiplicity="1" />
@@ -122,9 +137,28 @@
           </Key>
           <Property Name="AdminId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="16" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImagesID" />
+          </Key>
+          <Property Name="ImagesPath" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="ImagesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="FK_Users_Users">
+          <End Type="DBModel.User" Role="User" Multiplicity="1" />
+          <End Type="DBModel.User" Role="User1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="User1">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -159,6 +193,14 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="DBModel.Image">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="ImagesID" ColumnName="ImagesID" />
+                <ScalarProperty Name="ImagesPath" ColumnName="ImagesPath" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

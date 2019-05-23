@@ -15,13 +15,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Reservation Website-Admin", "Index", "Admin", new { area = "Admin" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Reservation", "Reservation", "Admin", new { area = "Admin" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Reservation", "Reservation", "Admin")</li>
                     <li>@Html.ActionLink("Users", "AllUsers", "Admin")</li>
-                    <li>@Html.ActionLink("Create User", "CreateUser", "Admin")</li>
+                    <li>@Html.ActionLink("Create User", "CreateUser", "Admin") </li>
+                    <li>@Html.ActionLink("Add Photos", "AddPhotos", "Admin")</li>                     
                 </ul>
             </div>
         </div>

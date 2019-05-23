@@ -28,5 +28,6 @@ namespace WebsiteForReservation
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
     }
 }

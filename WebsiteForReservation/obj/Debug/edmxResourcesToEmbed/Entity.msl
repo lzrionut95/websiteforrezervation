@@ -32,5 +32,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Images">
+      <EntityTypeMapping TypeName="DBModel.Image">
+        <MappingFragment StoreEntitySet="Images">
+          <ScalarProperty Name="ImagesID" ColumnName="ImagesID" />
+          <ScalarProperty Name="ImagesPath" ColumnName="ImagesPath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

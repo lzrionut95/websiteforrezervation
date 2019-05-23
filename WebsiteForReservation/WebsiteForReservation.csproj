@@ -134,6 +134,7 @@
     <Compile Include="Admin.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Email.cs" />
     <Compile Include="Classes\Tools.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -160,6 +161,9 @@
     </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Image.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation.cs">
       <DependentUpon>Entity.tt</DependentUpon>
@@ -247,6 +251,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -281,9 +287,16 @@
     <Content Include="Views\TEST\Edit.cshtml" />
     <Content Include="Views\TEST\Index1.cshtml" />
     <Content Include="Views\Admin\AllUsers.cshtml" />
+    <Content Include="Views\Login\Photos.cshtml" />
+    <Content Include="Views\Admin\AddPhotos.cshtml" />
+    <Content Include="Views\Admin\AddReservation.cshtml" />
+    <Content Include="Views\Login\ErrorLogin.cshtml" />
+    <Content Include="Views\Login\ResetPassword.cshtml" />
+    <Content Include="Views\Admin\Reservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Photos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
