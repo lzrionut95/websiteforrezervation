@@ -1,39 +1,32 @@
-﻿@model WebsiteForReservation.Reservation
-
-@{
-    ViewBag.Title = "Reservation";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
 }
 
-@using (Ajax.BeginForm("FindReservation", "Home", new AjaxOptions()
+<h2>FindReservation</h2>
+
+
+@using (Html.BeginForm("FindAdminReservation", "Admin", FormMethod.Post))
 {
-    HttpMethod = "Post",
-    UpdateTargetId = "allReservation",
-    InsertionMode = InsertionMode.Replace
-}))
-{
+    @Html.AntiForgeryToken()
+
     <div class="form-horizontal">
         <h4>Reservation</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            <div class="col-md-10">
-                Select Day: <input type="text" name="daySelected" class="datepicker" value="" />
+            <div class="col-md-offset-2 col-md-10">
+                <label>Date</label>
+                <input class="datepicker" type="datetime" name="daySelected" id="dateTime" />
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Find reservation" class="btn btn-default" />
+                <input type="submit" value="Reservation" class="btn btn-default" />
             </div>
         </div>
-
-
-    </div>
-    <div id="allReservation">
     </div>
 }
-
 
 <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />

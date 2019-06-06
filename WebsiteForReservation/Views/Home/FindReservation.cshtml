@@ -1,4 +1,4 @@
-﻿@model WebsiteForReservation.Models.ReportViewModel
+﻿@model String
 @{
     ViewBag.Title = "FindReservation";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -28,34 +28,6 @@
                 </div>
             </div>
     </div>
-}
-
-@using (Html.BeginForm("DoReservation", "Home", FormMethod.Post))
-{
-
-    DateTime startDate = new DateTime().AddHours(10);
-    DateTime endDate = startDate.AddHours(10);
-    DateTime[] vector = new DateTime[50];
-    int i = 0;
-
-
-    while (startDate.AddMinutes(15) <= endDate)
-    {
-        vector[i] = startDate;
-        startDate = startDate.AddMinutes(15);
-        i++;
-        string fullDate = startDate.Hour.ToString() + ":" +@startDate.Minute.ToString();
-    
-        Model.dateTimeData = vector[i];
-    
-        @Html.TextBoxFor (s => s.dateTimeData);
-        @Html.ValidationMessageFor(s => s.dateTimeData);
-    
-        <input type="submit" value="Reserve" />
-    <hr/>
-
-    }
-
 }
 
 <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />

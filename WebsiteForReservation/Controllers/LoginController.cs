@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -104,7 +105,11 @@ namespace WebsiteForReservation.Controllers
             pass.Add(usr.Email+"    "+  tool.Decrypt(usr.Password));
             }*/
 
-            List < Image > images= new List<Image>();
+
+
+
+
+            List< Image > images= new List<Image>();
             images.AddRange(db.Images);
 
             return View(images);

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,7 +23,8 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Users", "AllUsers", "Admin")</li>
                     <li>@Html.ActionLink("Create User", "CreateUser", "Admin") </li>
-                    <li>@Html.ActionLink("Add Photos", "AddPhotos", "Admin")</li>                     
+                    <li>@Html.ActionLink("Add Photos", "AddPhotos", "Admin")</li>  
+                    <li>@Html.ActionLink("Add Reservation", "AdminReservation", "Admin")</li>
                 </ul>
             </div>
         </div>

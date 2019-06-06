@@ -2,10 +2,10 @@
 
 @{
     ViewBag.Title = "Reservation";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
 }
 
-@using (Ajax.BeginForm("FindReservation", "Home", new AjaxOptions()
+@using (Ajax.BeginForm("FindAdminReservation", "Admin", new AjaxOptions()
 {
     HttpMethod = "Post",
     UpdateTargetId = "allReservation",
