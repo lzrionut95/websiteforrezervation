@@ -15,7 +15,7 @@ namespace WebsiteForReservation.Controllers
     public class LoginController : Controller
     {
         private DBEntities db = new DBEntities();
-        private Tools tool = new Tools();
+        private Service service = new Service();
 
         public ActionResult Login()
         {
@@ -34,7 +34,7 @@ namespace WebsiteForReservation.Controllers
             if (ModelState.IsValid && confirmPassword==user.Password)
             {
                 
-                user.Password = tool.Encrypt(user.Password);
+                user.Password = service.Encrypt(user.Password);
                 if (confirmEmail == user.Email) { 
                 db.Users.Add(user);
                 db.SaveChanges();
@@ -55,7 +55,7 @@ namespace WebsiteForReservation.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            string password = tool.Encrypt(user.Password);
+            string password = service.Encrypt(user.Password);
             try
             {
                 
@@ -134,7 +134,7 @@ namespace WebsiteForReservation.Controllers
             string pass=rand.Next(1000000, 9999999).ToString();        
             try { 
                 User user=db.Users.SingleOrDefault(u => u.Email == userEmail);              
-                user.Password =tool.Encrypt(pass);                
+                user.Password = service.Encrypt(pass);                
                 db.SaveChanges();
                 email.sendEmail(userEmail, pass);
             }

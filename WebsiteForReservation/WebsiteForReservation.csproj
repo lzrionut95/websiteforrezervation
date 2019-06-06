@@ -135,7 +135,7 @@
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Classes\Email.cs" />
-    <Compile Include="Classes\Tools.cs" />
+    <Compile Include="Classes\Service.cs" />
     <Compile Include="Classes\UserTime.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -295,6 +295,8 @@
     <Content Include="Views\PartialView\_AvailableReservation.cshtml" />
     <Content Include="Views\Admin\FindAdminReservation.cshtml" />
     <Content Include="Views\PartialView\_AvailableAdminReservation.cshtml" />
+    <Content Include="Views\Admin\CreateUser.cshtml" />
+    <Content Include="Views\Admin\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

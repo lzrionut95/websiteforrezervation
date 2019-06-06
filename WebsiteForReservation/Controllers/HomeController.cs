@@ -55,19 +55,20 @@ namespace WebsiteForReservation.Controllers
             {
                 return RedirectToAction("Login", "Login", new { area = "Login" });
             }
-            Tools tool = new Tools();           
+            Service service = new Service();           
             int usrId = Convert.ToInt32(Session["UserId"].ToString());
             User user = db.Users.Single(usr => usr.UserId == usrId);
-            oldPassword = tool.Encrypt(oldPassword);
-            if (oldPassword == user.Password && oldPassword != newPassword && newPassword == confirmNewPassword)
+            oldPassword = service.Encrypt(oldPassword);
+            if (oldPassword == user.Password.Replace(" ", "") && oldPassword != newPassword && newPassword == confirmNewPassword)
             {
                 user.Email = user.Email.Replace(" ", "");
-                user.Password = tool.Encrypt(newPassword);
+                user.Password = service.Encrypt(newPassword);
                 db.SaveChanges();
                 return RedirectToAction("Home", "Home", new { area = "Home" });
             }
             else
             {
+                Content("<script>alert('Error change password!');</script>");
                 return RedirectToAction("Settings", "Home", new { area = "Home" });
             }
 

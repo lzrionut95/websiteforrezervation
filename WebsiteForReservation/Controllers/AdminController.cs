@@ -16,7 +16,7 @@ namespace WebsiteForReservation.Controllers
     public class AdminController : Controller
     {
         private DBEntities db = new DBEntities();
-
+        private Service service = new Service();
         public ActionResult Index()
         {
             if (!existSession())
@@ -151,6 +151,84 @@ namespace WebsiteForReservation.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index", "Admin");
+        }
+
+        public ActionResult CreateUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateUser([Bind(Include = "UserId,Email,Password,FirstName,LastName")] User user, string confirmPassword, string confirmEmail)
+        {
+            if (ModelState.IsValid && confirmPassword == user.Password)
+            {
+                user.Password = service.Encrypt(user.Password);
+                if (confirmEmail == user.Email)
+                {
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    Content("<script>alert('Successfully registered');</script>");
+                    return RedirectToAction("Index", "Admin", new { area = "Admin" });
+                }
+                else
+                {
+                    Content("<script>alert('E-mail are not identical!');</script>");
+                    return RedirectToAction("CreateUser", "CreateUser", new { area = "Admin" });
+                }
+            }
+            else
+            {
+                Content("<script>alert('Password are not identical!');</script>");
+                return RedirectToAction("CreateUser", "CreateUser", new { area = "Admin" });
+            }
+        }
+
+        public ActionResult Logout()
+        {
+            if (!existSession())
+            {
+                return RedirectToAction("Login", "Login", new { area = "Login" });
+            }
+            Session.Abandon();
+            return RedirectToAction("Login", "Login", new { area = "Login" });
+        }
+
+        public ActionResult Settings()
+        {
+            if (!existSession())
+            {
+                return RedirectToAction("Login", "Login", new { area = "Login" });
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(string oldPassword, string newPassword, string confirmNewPassword)
+        {
+            if (!existSession())
+            {
+                return RedirectToAction("Login", "Login", new { area = "Login" });
+            }
+            Service service = new Service();
+            int adminId = Convert.ToInt32(Session["AdminId"].ToString());
+            Admin admin = db.Admins.Single(a => a.AdminId == adminId);
+            oldPassword = service.Encrypt(oldPassword);
+            string abc = admin.Password.Replace(" ", "");
+            if (oldPassword == admin.Password.Replace(" ", "") && oldPassword != newPassword && newPassword == confirmNewPassword)
+            {
+                admin.Email = admin.Email.Replace(" ", "");
+                admin.Password = service.Encrypt(newPassword);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Admin", new { area = "Admin" });
+            }
+            else
+            {
+                Content("<script>alert('Error change password!');</script>");
+                return RedirectToAction("Settings", "Admin", new { area = "Admin" });
+            }
+
+
         }
 
 
