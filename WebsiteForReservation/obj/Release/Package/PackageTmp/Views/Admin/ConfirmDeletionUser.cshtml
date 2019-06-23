@@ -1,0 +1,23 @@
+﻿@model WebsiteForReservation.User
+@{
+    ViewBag.Title = "ConfirmDeleteUser";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+       
+
+<div class="form-horizontal">
+    <table>
+        <tr>
+            <td>
+                <p>Are you sure you want to delete user @Model.FirstName @Model.LastName</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.ActionLink("Delete", "DeleteUser", "Admin", new { id = Model.UserId }, new { @class = "btn btn-primary btn-block" })
+            </td>
+        </tr>
+
+</div>
+
+

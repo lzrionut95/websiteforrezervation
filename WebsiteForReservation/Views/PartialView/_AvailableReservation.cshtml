@@ -1,13 +1,10 @@
 ﻿@model IEnumerable<string>
 
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
     <table class="table">
         <tr>
             <th>
-                <h4>Dates</h4>
+                <h4  style="font-weight:bold;">Available Dates</h4>
             </th>
 
         </tr>
@@ -16,10 +13,14 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(hourSelected => item)
+                    <span style="font-weight:bold; font-size:20px;">@Html.DisplayFor(hourSelected => item)</span>
                 </td>
 
-                <td>@Html.ActionLink("Reserve", "DoReservation", "Home", new { hourSelected=item },FormMethod.Get)</td>
+                <td>
+                    <div style="width: 150px">
+                        @Html.ActionLink("Reserve", "DoReservation", "User", new { hourSelected = item }, new { @class = "btn btn-primary btn-block", FormMethod.Get})
+                    </div>
+                </td>
 
             </tr>
         }

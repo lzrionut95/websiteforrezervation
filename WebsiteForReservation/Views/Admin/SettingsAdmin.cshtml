@@ -1,0 +1,70 @@
+﻿@model WebsiteForReservation.User
+
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>Settings</h2>
+
+
+@using (Html.BeginForm("ChangePassword", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.UserId)
+
+        <h4>Update password</h4>
+        <table>
+            <tr>
+                <td>
+                    <label>Old password</label>
+                </td>
+                <td>
+                    <div class="col-md-10">
+                        <input class="form-control" type="password" name="oldPassword" id="oldPassword" runat="server" />
+                    </div>
+                </td>
+                <td>
+                    <label>New password</label>
+                </td>
+                <td>
+                    <div class="col-md-10">
+                        <input class="form-control" type="password" name="newPassword" id="newPassword" />
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                <td>
+                    <label>Confirm new password</label>
+                </td>
+                <td>
+                    <div class="col-md-10">
+                        <input class="form-control" type="password" name="confirmNewPassword" id="confirmNewPassword" />
+                    </div>
+                </td>
+                <td></td></td>
+            </tr>
+            <tr>
+                <td>
+                <td>
+                <td>
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="ChangePassword" class="btn btn-default" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

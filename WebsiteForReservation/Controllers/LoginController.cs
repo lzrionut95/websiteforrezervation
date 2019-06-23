@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using WebsiteForReservation;
 using WebsiteForReservation.Classes;
 
@@ -14,7 +15,7 @@ namespace WebsiteForReservation.Controllers
 {
     public class LoginController : Controller
     {
-        private DBEntities db = new DBEntities();
+        private Entities db = new Entities();
         private Service service = new Service();
 
         public ActionResult Login()
@@ -22,6 +23,7 @@ namespace WebsiteForReservation.Controllers
             return View();
             
         }
+        [HttpGet]
         public ActionResult Register()
         {
             return View();
@@ -33,58 +35,56 @@ namespace WebsiteForReservation.Controllers
         {
             if (ModelState.IsValid && confirmPassword==user.Password)
             {
-                
+                List<User> userList = db.Users.ToList();
+                foreach(User usr in userList)
+                {
+                    if (usr.Email.Replace(" ","") == user.Email.Replace(" ", ""))
+                    {
+                        string errorMessage = "Account with this e-mail already exist!";
+                        return RedirectToAction("ErrorLogin", new RouteValueDictionary(new { controller = "Login", message = errorMessage }));
+
+                    }
+                }
                 user.Password = service.Encrypt(user.Password);
-                if (confirmEmail == user.Email) { 
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Login");
+                if (confirmEmail == user.Email) {
+                    user.isAdmin = false;
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return RedirectToAction("Login");
                 }
                 else
                 {
-
+                    string errorMessage = "Invalid E-mail!";
+                    return RedirectToAction("ErrorLogin", new RouteValueDictionary(new { controller = "Login", message = errorMessage }));
                 }
-            }
-            else
-            {
-
             }
             ViewBag.Message = user.FirstName + " " + user.LastName + " successfully registered";
             return View(user);
         }
         [HttpPost]
-        public ActionResult Login(User user)
+        public ActionResult Login(User userLoged)
         {
-            string password = service.Encrypt(user.Password);
-            try
-            {
-                
-                
-                var admin = db.Admins.SingleOrDefault(u => u.Email == user.Email && u.Password == "admin");
-                if (admin != null)
-                {
-                    Session["AdminId"] = admin.AdminId.ToString();
-                    return RedirectToAction("Index", "Admin", new { area = "Admin" });
-
-                }
-            }
-            catch ( Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            string password = service.Encrypt(userLoged.Password);
             try
             {               
-                var usr = db.Users.SingleOrDefault(u => u.Email == user.Email && u.Password == password);                         
-            if (usr != null)
-            {
-                Session["UserId"] = usr.UserId.ToString();
-                Session["Email"] = usr.Email.ToString();
-                return RedirectToAction("Home", "Home", new { area = "Home" });
-                
-            }
-            else
-            {
-                    return RedirectToAction("ErrorLogin", "Login", new { area = "Login" });
+                User user = db.Users.SingleOrDefault(u => u.Email == userLoged.Email && u.Password == password);
+                if (user != null)
+                {
+                    Session["UserId"] = user.UserId.ToString();
+                    Session["Email"] = user.Email.ToString();
+                    if (user.isAdmin == true)
+                    {
+                        return RedirectToAction("AllUsers", "Admin", new { area = "Admin" });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Reservation", "User", new { area = "User" });
+                    }
+                }
+                else
+                {
+                    string errorMessage = "E-mail or password is incorrect!";
+                    return RedirectToAction("ErrorLogin", new RouteValueDictionary(new { controller = "Login", message = errorMessage }));
                 }
             }
             catch (Exception e)
@@ -97,26 +97,15 @@ namespace WebsiteForReservation.Controllers
         
         public ActionResult Photos()
         {
-            /*List<User> user = new List<User>();
-            List<string> pass = new List<string>();
-            user.AddRange(db.Users);
-            foreach (User usr in user) { 
-
-            pass.Add(usr.Email+"    "+  tool.Decrypt(usr.Password));
-            }*/
-
-
-
-
-
             List< Image > images= new List<Image>();
             images.AddRange(db.Images);
 
             return View(images);
         }
 
-        public ActionResult ErrorLogin()
+        public ActionResult ErrorLogin(string message)
         {
+            ViewBag.Message = message;
             return View();
         }
 
@@ -128,23 +117,30 @@ namespace WebsiteForReservation.Controllers
         [HttpPost]
         public ActionResult DoResetPassword(string userEmail)
         {
-            Email email = new Email();
-            email.IsValidEmail(userEmail);
-            Random rand = new Random();
+            if(service.IsValidEmail(userEmail)==true)
+            {
+                Random rand = new Random();
             string pass=rand.Next(1000000, 9999999).ToString();        
             try { 
                 User user=db.Users.SingleOrDefault(u => u.Email == userEmail);              
                 user.Password = service.Encrypt(pass);                
                 db.SaveChanges();
-                email.sendEmail(userEmail, pass);
+                String message = "Your new password is" + pass;
+                service.sendEmail(userEmail, message, "Password reseted");
             }
             catch(Exception)
             {
-                return Content("<script>alert('Wrong Email!');</script>");
+                string errorMessage = "E-mail is inccorect!";
+                return RedirectToAction("ErrorLogin", new RouteValueDictionary(new { controller = "Login", message = errorMessage }));
             }
-            Content("<script>alert('Email was send!');</script>");
-            return RedirectToAction("Login", "Login", new { area = "Login" });
+            string sucesfullyMessage = "E-mail was send!";
+            return RedirectToAction("ErrorLogin", new RouteValueDictionary(new { controller = "Login", message = sucesfullyMessage }));
+            }
+
+            return RedirectToAction("ErrorLogin", new RouteValueDictionary(new { controller = "Login", message = "E-mail is inccorect!" }));
         }
+
+
 
     }
 }

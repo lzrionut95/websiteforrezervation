@@ -4,22 +4,24 @@
     Layout = "~/Views/Shared/Admin_Layout.cshtml";
 }
 
-<table class="table">
+<table class="table" style="width: 350px">
     <tr>
         <th>
-            <h4>Dates</h4>
+            <h4 style="font-weight:bold;">Available Dates</h4>
         </th>
 
     </tr>
 
     @foreach (string item in Model)
     {
-        <tr>
+        <tr >
             <td>
-                @Html.DisplayFor(hourSelected => item)
+                <span style="font-weight:bold; font-size:20px;">@Html.DisplayFor(hourSelected => item)</span>
             </td>
 
-            <td>@Html.ActionLink("Reserve", "DoAdminReservation", "Admin", new { hourSelected = item }, FormMethod.Get)</td>
+            <td  style="width: 150px">
+            @Html.ActionLink("Reserve", "DoAdminReservation", "Admin", new { hourSelected = item }, new { @class = "btn btn-primary btn-block", FormMethod.Get })
+            </td>
 
         </tr>
     }

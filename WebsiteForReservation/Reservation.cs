@@ -18,7 +18,5 @@ namespace WebsiteForReservation
         public System.DateTime Date { get; set; }
         public bool Status { get; set; }
         public int UserId { get; set; }
-    
-        public virtual User User { get; set; }
     }
 }

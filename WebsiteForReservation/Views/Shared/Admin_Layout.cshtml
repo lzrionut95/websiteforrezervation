@@ -8,7 +8,7 @@
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 </head>
-<body>
+<body background="~/Content/img/background_calendar.jpeg">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -17,15 +17,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Reservation", "Reservation", "Admin", new { area = "Admin" }, new { @class = "navbar-brand" })
+                @Html.Label("Reservation", new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Users", "AllUsers", "Admin")</li>
-                    <li>@Html.ActionLink("Create User", "CreateUser", "Admin") </li>
                     <li>@Html.ActionLink("Add Photos", "AddPhotos", "Admin")</li>
-                    <li>@Html.ActionLink("Add Reservation", "AdminReservation", "Admin")</li>
-                    <li>@Html.ActionLink("Settings", "Settings", "Admin")</li>
+                    <li>@Html.ActionLink("Reservations", "ChooseDateForReservation", "Admin")</li>
+                    <li>@Html.ActionLink("Create User", "CreateUser", "Admin") </li>
+                    <li>@Html.ActionLink("Settings", "SettingsAdmin", "Admin")</li>
                     <li>@Html.ActionLink("Logout", "Logout", "Admin")</li>
                     Logout
                 </ul>

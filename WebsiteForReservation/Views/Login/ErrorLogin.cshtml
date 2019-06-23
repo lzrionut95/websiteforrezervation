@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "ErrorLogin";
     Layout = "~/Views/Shared/Login_Layout.cshtml";
 }
@@ -12,12 +11,11 @@
             <div class="col-sm-4 col-sm-offset-4 login_bg">
                 <div style="text-align: center; margin-top:80px">
                     <h3>
-                        E-mail or password is wrong!
+                        @ViewBag.Message 
                     </h3>
                     <h3>
-                        Try again
-
-                        @Ajax.ActionLink("here", "Login", new AjaxOptions { HttpMethod = "POST" },null, new { @style = "color: #FFFFFF;" })
+                        Go to first page
+                        @Html.ActionLink("here", "Login", "Login", new { @style = "color: #FFFFFF;" }, FormMethod.Get)
                     </h3>
                 </div>
                 

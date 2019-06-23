@@ -1,0 +1,21 @@
+﻿@model IEnumerable<string>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                <h4>Dates</h4>
+            </th>
+
+        </tr>
+
+        @foreach (string item in Model)
+        {
+            <tr>
+                <td>
+                    <span style="font-weight:bold; font-size:20px;">@Html.DisplayFor(reservation => item)</span>
+                </td>
+            </tr>
+        }
+
+    </table>

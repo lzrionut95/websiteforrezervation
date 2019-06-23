@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "AddPhotos";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>AddPhotos</h2>
+
+@using (Html.BeginForm("AddPhotos", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="uploadFile" />
+    <input type="submit" />
+}
+

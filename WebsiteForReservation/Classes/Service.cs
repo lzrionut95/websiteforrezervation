@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -10,105 +12,62 @@ namespace WebsiteForReservation.Classes
 {
     public class Service
     {
-        private  string strKey = "U2A9/R*41FD412+4-123";
-        public  string Encrypt(string strData)
+        private Entities db = new Entities();
+        private  string stringKey = "U2A9/R*41FD412+4";
+        public  string Encrypt(string password)
         {
-            string strValue = "";
-            if (!string.IsNullOrEmpty(strKey))
-            {
-                if (strKey.Length < 16)
-                {
-                    char c = "XXXXXXXXXXXXXXXX"[16];
-                    strKey = strKey + strKey.Substring(0, 16 - strKey.Length);
-                }
+            string finalValue = "";
 
-                if (strKey.Length > 16)
-                {
-                    strKey = strKey.Substring(0, 16);
-                }
+                byte[] key = Encoding.UTF8.GetBytes(stringKey.Substring(0, 8));
+                byte[] initializationVector = Encoding.UTF8.GetBytes(stringKey.Substring(stringKey.Length - 8, 8));
+                byte[] word = Encoding.UTF8.GetBytes(password);
 
-                // create encryption keys
-                byte[] byteKey = Encoding.UTF8.GetBytes(strKey.Substring(0, 8));
-                byte[] byteVector = Encoding.UTF8.GetBytes(strKey.Substring(strKey.Length - 8, 8));
-
-                // convert data to byte array
-                byte[] byteData = Encoding.UTF8.GetBytes(strData);
-
-                // encrypt 
                 DESCryptoServiceProvider objDES = new DESCryptoServiceProvider();
-                MemoryStream objMemoryStream = new MemoryStream();
-                CryptoStream objCryptoStream = new CryptoStream(objMemoryStream, objDES.CreateEncryptor(byteKey, byteVector), CryptoStreamMode.Write);
-                objCryptoStream.Write(byteData, 0, byteData.Length);
-                objCryptoStream.FlushFinalBlock();
+                MemoryStream memoryStream = new MemoryStream();
+                CryptoStream cryptoStream = new CryptoStream(memoryStream, objDES.CreateEncryptor(key, initializationVector), CryptoStreamMode.Write);
+                cryptoStream.Write(word, 0, word.Length);
+                cryptoStream.FlushFinalBlock();
 
-                // convert to string and Base64 encode
-                strValue = Convert.ToBase64String(objMemoryStream.ToArray());
-            }
-            else
-            {
-                strValue = strData;
-            }
-
-            return strValue;
+            finalValue = Convert.ToBase64String(memoryStream.ToArray());
+            return finalValue;
         }
 
-        public  string Decrypt(string strData)
+        public bool IsValidEmail(string email)
         {
-            string strValue = "";
-            if (!string.IsNullOrEmpty(strKey))
+            try
             {
-                // convert key to 16 characters for simplicity
-                if (strKey.Length < 16)
+                var addr = new MailAddress(email);
+                List<User> userList = db.Users.ToList();
+                bool emailExist = false;
+                foreach (User usr in userList)
                 {
-                    strKey = strKey + strKey.Substring(0, 16 - strKey.Length);
-
+                    if (usr.Email.Replace(" ", "") == email.Replace(" ", ""))
+                    {
+                        emailExist = true;
+                    }
                 }
-
-                if (strKey.Length > 16)
-                {
-                    strKey = strKey.Substring(0, 16);
-
-                }
-
-                // create encryption keys
-                byte[] byteKey = Encoding.UTF8.GetBytes(strKey.Substring(0, 8));
-                byte[] byteVector = Encoding.UTF8.GetBytes(strKey.Substring(strKey.Length - 8, 8));
-
-                // convert data to byte array and Base64 decode
-                byte[] byteData = new byte[strData.Length + 1];
-                try
-                {
-                    byteData = Convert.FromBase64String(strData);
-                }
-                catch
-                {
-                    strValue = strData;
-                }
-
-
-                if (string.IsNullOrEmpty(strValue))
-                {
-                    // decrypt
-                    DESCryptoServiceProvider objDES = new DESCryptoServiceProvider();
-                    MemoryStream objMemoryStream = new MemoryStream();
-                    CryptoStream objCryptoStream = new CryptoStream(objMemoryStream, objDES.CreateDecryptor(byteKey, byteVector), CryptoStreamMode.Write);
-                    objCryptoStream.Write(byteData, 0, byteData.Length);
-                    objCryptoStream.FlushFinalBlock();
-
-                    // convert to string
-                    System.Text.Encoding objEncoding = System.Text.Encoding.UTF8;
-                    strValue = objEncoding.GetString(objMemoryStream.ToArray());
-
-                }
+                return addr.Address == email && emailExist==true;
             }
-            else
+            catch
             {
-                strValue = strData;
+                return false;
             }
-
-            return strValue;
         }
 
+        public void sendEmail(string emailTo, string message,string subject)
+        {
+            string emailFrom = "websiteemail331@gmail.com";
+            MailMessage mail = new MailMessage(emailFrom, emailTo);
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            smtp.EnableSsl = true;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(emailFrom, "@7Q=cp?`ZJOVQB!2CoSf");
+            smtp.Host = "smtp.gmail.com";
+            mail.Subject = subject;
+            mail.Body = message;
+            smtp.Send(mail);
+        }
 
     }
 }

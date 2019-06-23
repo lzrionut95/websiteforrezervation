@@ -21,12 +21,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><h3>@Html.ActionLink("Login", "Login", "Login")</h3></li>
-                    <li style="margin-left:10px;"><h3>@Html.ActionLink("Photos", "Photos", "Login")</h3></li>
+                    <h3>@Html.ActionLink("Photos", "Photos", "Login", null, new { @style = "color: #ffffff" })</h3></li>
                 </ul>
             </div>
         </div>
-    <div>
+    <div >
         @RenderBody()
     </div>
     @Scripts.Render("~/bundles/jquery")

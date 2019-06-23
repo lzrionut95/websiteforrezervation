@@ -20,9 +20,9 @@ namespace WebsiteForReservation
             );
 
             routes.MapRoute(
-            name: "Home",
+            name: "User",
             url: "{controller}/{action}/{id}",
-            defaults: new { controller = "Home", action = "Home", id = UrlParameter.Optional }
+            defaults: new { controller = "User", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

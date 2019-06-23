@@ -1,5 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="AdminId" />
+    </Key>
+    <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nchar" MaxLength="30" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Images">
+    <Key>
+      <PropertyRef Name="ImagesID" />
+    </Key>
+    <Property Name="ImagesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ImagesPath" Type="nchar" MaxLength="100" Nullable="false" />
+  </EntityType>
   <EntityType Name="Reservation">
     <Key>
       <PropertyRef Name="ReservationId" />
@@ -15,7 +31,7 @@
     </Key>
     <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
-    <Property Name="Password" Type="nchar" MaxLength="16" Nullable="false" />
+    <Property Name="Password" Type="nchar" MaxLength="30" Nullable="false" />
     <Property Name="FirstName" Type="nchar" MaxLength="20" Nullable="false" />
     <Property Name="LastName" Type="nchar" MaxLength="20" Nullable="false" />
   </EntityType>
@@ -44,6 +60,8 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="DBModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Reservation_Users" Association="Self.FK_Reservation_Users">

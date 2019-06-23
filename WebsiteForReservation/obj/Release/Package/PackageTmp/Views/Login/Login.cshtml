@@ -21,7 +21,7 @@
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="form-group">                  
+                <div class="form-group">
                     @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password", @type = "password" } })
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
@@ -32,6 +32,7 @@
                     </div>
                 </div>
                 <p>Not registred?    @Html.ActionLink("Register now!", "Register") </p>
+                <p>  @Html.ActionLink("Forgot password?", "ResetPassword") </p>
             </div>
         </div>
     </div>

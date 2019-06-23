@@ -14,7 +14,7 @@ namespace WebsiteForReservation
     
     public partial class Image
     {
-        public string ImagesPath { get; set; }
         public int ImagesID { get; set; }
+        public string ImagesPath { get; set; }
     }
 }

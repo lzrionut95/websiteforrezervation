@@ -1,0 +1,14 @@
+﻿@model List<Image>
+@{
+    Layout = "~/Views/Shared/Login_Layout.cshtml";
+}
+
+<div style="margin-left:auto">
+    @foreach (var item in Model)
+    {
+        <div style="text-align: center; margin-top:80px">
+            <img src="@Url.Content(item.ImagesPath)" alt="@item.ImagesPath" />
+        </div>
+    }
+</div>
+

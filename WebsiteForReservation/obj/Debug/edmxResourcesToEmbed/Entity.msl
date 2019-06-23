@@ -14,6 +14,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="DBModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="Password" ColumnName="Password" />

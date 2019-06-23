@@ -1,0 +1,63 @@
+﻿@model WebsiteForReservation.Reservation
+
+@{
+    ViewBag.Title = "Reservation";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@using (Ajax.BeginForm("AllReservationsFromDate", "Admin", new AjaxOptions()
+{
+    HttpMethod = "Post",
+    UpdateTargetId = "showReservation",
+    InsertionMode = InsertionMode.Replace
+}))
+{
+    <div class="form-horizontal">
+        <h4>Reservation</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Select Day: <input type="text" name="daySelected" class="datepicker" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Get reservations" class="btn btn-default" />
+            </div>
+        </div>
+
+
+    </div>
+    <div id="showReservation">
+    </div>
+}
+
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "yy/mm/dd",
+                changeMonth: true,
+                changeYear: true,
+                //yearRange : "-10:+10"
+                minDate: new Date(2017, 0, 1),
+                maxDate: new Date(2030, 0, 1),
+                showOn: "both",
+                buttonText: "<i class='fa fa-calendar'></i>"
+            });
+        });
+    </script>
+}

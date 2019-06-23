@@ -131,46 +131,41 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin.cs">
-      <DependentUpon>Entity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\Email.cs" />
     <Compile Include="Classes\Service.cs" />
     <Compile Include="Classes\UserTime.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\TESTController.cs" />
-    <Compile Include="Entity.Context.cs">
+    <Compile Include="EntityDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Entity.Context.tt</DependentUpon>
+      <DependentUpon>EntityDataModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity.cs">
+    <Compile Include="EntityDataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Entity.tt</DependentUpon>
+      <DependentUpon>EntityDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity.Designer.cs">
+    <Compile Include="EntityDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Entity.edmx</DependentUpon>
+      <DependentUpon>EntityDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Image.cs">
-      <DependentUpon>Entity.tt</DependentUpon>
+      <DependentUpon>EntityDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation.cs">
-      <DependentUpon>Entity.tt</DependentUpon>
+      <DependentUpon>EntityDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>Entity.tt</DependentUpon>
+      <DependentUpon>EntityDataModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -220,15 +215,15 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="Entity.Context.tt">
+    <Content Include="EntityDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Entity.Context.cs</LastGenOutput>
-      <DependentUpon>Entity.edmx</DependentUpon>
+      <DependentUpon>EntityDataModel.edmx</DependentUpon>
+      <LastGenOutput>EntityDataModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Entity.tt">
+    <Content Include="EntityDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Entity.edmx</DependentUpon>
-      <LastGenOutput>Entity.cs</LastGenOutput>
+      <DependentUpon>EntityDataModel.edmx</DependentUpon>
+      <LastGenOutput>EntityDataModel.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -236,12 +231,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Entity.edmx">
+    <EntityDeploy Include="EntityDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Entity.Designer.cs</LastGenOutput>
+      <LastGenOutput>EntityDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Entity.edmx.diagram">
-      <DependentUpon>Entity.edmx</DependentUpon>
+    <Content Include="EntityDataModel.edmx.diagram">
+      <DependentUpon>EntityDataModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\websiteforprogramming - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -271,21 +266,16 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\User_Layout.cshtml" />
     <Content Include="Views\Shared\Login_Layout.cshtml" />
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Home\Home.cshtml" />
-    <Content Include="Views\Home\Settings.cshtml" />
-    <Content Include="Views\Home\FindReservation.cshtml" />
-    <Content Include="Views\Home\Reservation.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Settings.cshtml" />
+    <Content Include="Views\User\FindReservation.cshtml" />
+    <Content Include="Views\User\Reservation.cshtml" />
     <Content Include="Views\Shared\Admin_Layout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\TEST\Create.cshtml" />
-    <Content Include="Views\TEST\Delete.cshtml" />
-    <Content Include="Views\TEST\Details.cshtml" />
-    <Content Include="Views\TEST\Edit.cshtml" />
-    <Content Include="Views\TEST\Index1.cshtml" />
     <Content Include="Views\Admin\AllUsers.cshtml" />
     <Content Include="Views\Login\Photos.cshtml" />
     <Content Include="Views\Admin\AddPhotos.cshtml" />
@@ -296,7 +286,10 @@
     <Content Include="Views\Admin\FindAdminReservation.cshtml" />
     <Content Include="Views\PartialView\_AvailableAdminReservation.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
-    <Content Include="Views\Admin\Settings.cshtml" />
+    <Content Include="Views\Admin\SettingsAdmin.cshtml" />
+    <Content Include="Views\Admin\ConfirmDeletionUser.cshtml" />
+    <Content Include="Views\PartialView\_allReservationOfDate.cshtml" />
+    <Content Include="Views\Admin\ChooseDateForReservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

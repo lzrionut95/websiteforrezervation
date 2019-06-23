@@ -6,7 +6,7 @@
     </Key>
     <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
-    <Property Name="Password" Type="nchar" MaxLength="30" Nullable="false" />
+    <Property Name="Password" Type="nchar" MaxLength="100" Nullable="false" />
     <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
   </EntityType>
   <EntityType Name="Images">
@@ -34,6 +34,7 @@
     <Property Name="Password" Type="nchar" MaxLength="30" Nullable="false" />
     <Property Name="FirstName" Type="nchar" MaxLength="20" Nullable="false" />
     <Property Name="LastName" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="isAdmin" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_Reservation_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />

@@ -9,17 +9,15 @@
 
 <table class="table">
     <tr>
+
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            <span style="font-weight:bold; font-size:20px;">First Name </span>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Password)
+            <span style="font-weight:bold; font-size:20px;">Last Name</span>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            <span style="font-weight:bold; font-size:20px;">E-mail</span>
         </th>
         <th></th>
     </tr>
@@ -27,19 +25,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
+            <span style="font-weight:bold; font-size:15px;"> @Html.DisplayFor(modelItem => item.FirstName) </span>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Password)
+            <span style="font-weight:bold; font-size:15px;">@Html.DisplayFor(modelItem => item.LastName) </span>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
+            <span style="font-weight:bold; font-size:15px;">@Html.DisplayFor(modelItem => item.Email) </span>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LastName)
+            @Html.ActionLink("Add Reservation", "AdminReservation", new { id = item.UserId }, new { @class = "btn btn-primary btn-block" })
         </td>
         <td>
-            @Html.ActionLink("Add Reservation", "AdminReservation", new { id=item.UserId })           
+            @Html.ActionLink("Delete User", "ConfirmDeletionUser", new { id = item.UserId }, new { @class = "btn btn-primary btn-block" })
         </td>
     </tr>
 }
