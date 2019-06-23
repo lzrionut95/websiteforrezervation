@@ -285,7 +285,7 @@
     <Content Include="Views\PartialView\_AvailableReservation.cshtml" />
     <Content Include="Views\Admin\FindAdminReservation.cshtml" />
     <Content Include="Views\PartialView\_AvailableAdminReservation.cshtml" />
-    <Content Include="Views\Admin\CreateUser.cshtml" />
+    <Content Include="Views\Admin\CreateAdmin.cshtml" />
     <Content Include="Views\Admin\SettingsAdmin.cshtml" />
     <Content Include="Views\Admin\ConfirmDeletionUser.cshtml" />
     <Content Include="Views\PartialView\_allReservationOfDate.cshtml" />

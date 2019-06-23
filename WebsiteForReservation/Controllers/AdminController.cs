@@ -179,7 +179,7 @@ namespace WebsiteForReservation.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
-        public ActionResult CreateUser()
+        public ActionResult CreateAdmin()
         {
             if (!existSession())
             {
@@ -190,7 +190,7 @@ namespace WebsiteForReservation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateUser([Bind(Include = "UserId,Email,Password,FirstName,LastName")] User user, string confirmPassword, string confirmEmail)
+        public ActionResult CreateAdmin([Bind(Include = "UserId,Email,Password,FirstName,LastName")] User user, string confirmPassword, string confirmEmail)
         {
             if (!existSession())
             {
@@ -201,6 +201,7 @@ namespace WebsiteForReservation.Controllers
                 user.Password = service.Encrypt(user.Password);
                 if (confirmEmail == user.Email)
                 {
+                    user.isAdmin = true;
                     db.Users.Add(user);
                     db.SaveChanges();
                     Content("<script>alert('Successfully registered');</script>");

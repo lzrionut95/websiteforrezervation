@@ -4,10 +4,12 @@
 }
 
 <div style="margin-left:auto">
+    int index = 0;
     @foreach (var item in Model)
     {
+
         <div style="text-align: center; margin-top:80px">
-            <img src="@Url.Content(item.ImagesPath)" alt="@item.ImagesPath" />
+            <img src="@Url.Content(item.ImagesPath)" alt="@item.ImagesPath" height="500" width="500" />
         </div>
     }
 </div>
